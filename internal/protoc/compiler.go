@@ -502,6 +502,10 @@ func getRelOutputFilePath(protoSet *file.ProtoSet, dirPath string, fileSuffix st
 		// this should never happen, but could in a bad case with links
 		return "", fmt.Errorf("could not find relative path for %q to %q, this is a system error, please file a bug at github.com/uber/prototool/issues/new: %v", dirPath, protoSet.Config.DirPath, err)
 	}
+	fmt.Fprintf(os.Stderr, "XXXX configDirPath: %s dirPath: %s relPath: %s\n", protoSet.Config.DirPath, dirPath, relPath)
+	if relPath == "" || relPath == "." {
+		relPath = "out"
+	}
 	return filepath.Join(relPath, filepath.Base(relPath)+"."+fileSuffix), nil
 }
 
